@@ -22,7 +22,8 @@ export async function fetchLiveApiToken(): Promise<string> {
   // Otherwise, kick off a new request
   activePromise = (async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/token');
+      const fetchUrl = import.meta.env.DEV ? 'http://localhost:3001/api/token' : '/api/token';
+      const response = await fetch(fetchUrl);
       
       if (!response.ok) {
         throw new Error(`Failed to fetch token: ${response.statusText}`);
@@ -36,7 +37,7 @@ export async function fetchLiveApiToken(): Promise<string> {
 
       cachedToken = data.token;
       console.log('✅ Successfully fetched API token for Gemini Live');
-      return cachedToken;
+      return cachedToken || '';
     } catch (error) {
       console.error('Error fetching token:', error);
       throw error;
@@ -46,5 +47,5 @@ export async function fetchLiveApiToken(): Promise<string> {
     }
   })();
 
-  return activePromise;
+  return activePromise || Promise.resolve('');
 }
