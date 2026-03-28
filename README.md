@@ -10,17 +10,16 @@
 ## Project Structure
 This is a monorepo containing:
 - `/frontend`: The React + Vite client app.
-- `/server`: A lightweight Express server for proxying token requests and authenticating with the Gemini Live API safely during local development.
+- `/backend`: A lightweight Express server for proxying token requests and authenticating with the Gemini Live API safely during local development.
 
 ## Local Setup & Running the App
 
 ### 1. Configure the Environment Variables
-Before running the application, you need to set up the Gemini API key. Add it to the `server` directory, which is configured to be ignored by source control and serves as the central configuration point for the local dev server.
+Before running the application, you need to set up the Gemini API key. Add it to the root project directory, which serves as the central configuration point.
 
-1. Create a file named `.env.local` inside the `server/` folder:
+1. Create a file named `.env.local` inside the root folder:
 ```bash
-# From the root directory:
-touch server/.env.local
+touch .env.local
 ```
 
 2. Add your Gemini API key to `.env.local`:
@@ -29,11 +28,11 @@ GEMINI_API_KEY=your_actual_api_key_here
 ```
 
 ### 2. Start the Backend Server
-The server provides a local token proxy to abstract the API key from the frontend during development.
+The backend provides a local token proxy to abstract the API key from the frontend during development.
 
-1. Open a terminal and navigate to the `server` directory:
+1. Open a terminal and navigate to the `backend` directory:
 ```bash
-cd server
+cd backend
 ```
 
 2. Install the dependencies:
@@ -45,10 +44,10 @@ npm install
 ```bash
 npm run dev
 ```
-The server will run at `http://localhost:3001` and provide your frontend with access to the Gemini API key through the local proxy.
+The backend will run at `http://localhost:3001` and provide your frontend with access to the Gemini API key through the local proxy.
 
 ### 3. Start the Frontend Application
-Leave the server running and open a new terminal window or tab.
+Leave the backend running and open a new terminal window or tab.
 
 1. Navigate to the `frontend` directory:
 ```bash
@@ -71,6 +70,15 @@ Open this URL in your browser.
 ### 4. Play the Game
 - Ensure your browser has permission to access your webcam.
 - Once loaded, follow the on-screen instructions to get started. The Dungeon Master will wait for you to scan a real-life artifact using your camera before beginning the multi-challenge narrative!
+
+## Core Technologies
+
+- **React + Vite**: Chosen for lightning-fast Hot Module Replacement (HMR) and a highly responsive development experience.
+- **MediaPipe (Tasks Vision)**: Enables on-device, real-time object detection. This allows the game to "see" your physical artifacts via the webcam with minimal latency and maximum privacy.
+- **Gemini Live API**: Powering the Dungeon Master. We use the WebSocket-based Multimodal Live API to provide real-time audio and text narrative, creating a truly interactive and conversational storytelling loop.
+- **Framer Motion**: Used to create a premium, "magical" feel through smooth transitions and complex UI animations.
+- **Tailwind CSS**: A utility-first CSS framework that allowed us to build a sophisticated, dark-mode-first design system rapidly.
+- **Express (Node.js)**: Acts as a lightweight bridge for secure token management and local development proxying.
 
 ---
 
