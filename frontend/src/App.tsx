@@ -285,17 +285,6 @@ function App() {
                     ))}
                   </div>
                 </div>
-
-                <button
-                  onClick={() => {
-                    activeLiveSession?.disconnect();
-                    audioPlayer.stop();
-                    setGameState(initialState);
-                  }}
-                  className="mt-8 px-6 py-2 border border-rose-900/50 text-rose-500 hover:text-rose-400 hover:bg-rose-950/30 rounded-lg cursor-pointer transition-colors text-sm uppercase tracking-wider font-semibold"
-                >
-                  Sever Connection
-                </button>
               </motion.div>
             )}
 
@@ -463,8 +452,23 @@ function App() {
           </AnimatePresence>
         </main>
 
+        {gameState.phase !== "idle" && (
+          <div className="flex justify-center shrink-0 mt-4 z-20">
+            <button
+              onClick={() => {
+                activeLiveSession?.disconnect();
+                audioPlayer.stop();
+                setGameState(initialState);
+              }}
+              className="px-6 py-2 border border-rose-900/50 text-rose-500 hover:text-rose-400 hover:bg-rose-950/30 rounded-lg cursor-pointer transition-colors text-sm uppercase tracking-wider font-semibold shadow-[0_0_15px_rgba(225,29,72,0.1)]"
+            >
+              Restart Game
+            </button>
+          </div>
+        )}
+
         {/* Footer Ambience */}
-        <footer className="mt-auto pt-10 text-center opacity-30">
+        <footer className="mt-auto pt-6 text-center opacity-30">
           <p className="text-[10px] tracking-[0.2em] font-serif">
             A DeepMind Experiment
           </p>
